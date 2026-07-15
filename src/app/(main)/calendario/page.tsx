@@ -80,7 +80,7 @@ export default async function CalendarioPage({
         </Link>
       </div>
 
-      <div className="mb-4 rounded-2xl border border-hairline bg-surface px-4 py-3 text-sm text-ink">
+      <div className="mb-4 rounded-2xl border-2 border-accent bg-surface px-4 py-3 text-sm text-ink">
         <span className="font-display text-base font-extrabold tabular-nums text-white">
           {contador}
         </span>{" "}
