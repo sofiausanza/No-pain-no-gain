@@ -8,6 +8,17 @@ export async function actualizarPeso(usuarioId: string, peso: number | null) {
   revalidatePath("/perfil");
 }
 
+export async function actualizarAltura(
+  usuarioId: string,
+  altura: number | null
+) {
+  await supabase
+    .from("usuarios")
+    .update({ altura_cm: altura })
+    .eq("id", usuarioId);
+  revalidatePath("/perfil");
+}
+
 export async function actualizarObjetivoAgua(
   usuarioId: string,
   ml: number | null
