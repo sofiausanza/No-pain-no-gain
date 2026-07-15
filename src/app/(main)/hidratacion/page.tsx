@@ -20,6 +20,16 @@ function formatearFechaCorta(fecha: string) {
   });
 }
 
+function formatearFechaLarga(fecha: string) {
+  const [y, m, d] = fecha.split("-").map(Number);
+  const texto = new Date(y, m - 1, d).toLocaleDateString("es-AR", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+  });
+  return texto.charAt(0).toUpperCase() + texto.slice(1);
+}
+
 export default async function HidratacionPage() {
   const usuario = await getUsuario();
   const hoy = fechaArgentina(new Date().toISOString());
@@ -47,6 +57,7 @@ export default async function HidratacionPage() {
   return (
     <div>
       <TopBar title="Hidratación" />
+      <p className="-mt-3 mb-4 text-xs text-ink-faint">{formatearFechaLarga(hoy)}</p>
 
       <div className="mb-2 text-center">
         <p className="font-display text-4xl font-extrabold tabular-nums text-white">

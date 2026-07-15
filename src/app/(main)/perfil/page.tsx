@@ -1,6 +1,8 @@
 import { TopBar } from "@/components/top-bar";
 import { getUsuario } from "@/lib/usuario";
 import { getEstadisticas } from "@/lib/estadisticas";
+import { EditableField } from "./editable-field";
+import { actualizarPeso, actualizarObjetivoAgua } from "./actions";
 
 export const metadata = { title: "Perfil" };
 export const dynamic = "force-dynamic";
@@ -69,13 +71,17 @@ export default async function PerfilPage() {
         label="Altura"
         value={usuario.altura_cm ? `${usuario.altura_cm} cm` : "Sin definir"}
       />
-      <Field
+      <EditableField
         label="Peso"
-        value={usuario.peso_kg ? `${usuario.peso_kg} kg` : "Sin definir"}
+        initialValue={usuario.peso_kg}
+        suffix="kg"
+        guardar={actualizarPeso.bind(null, usuario.id)}
       />
-      <Field
+      <EditableField
         label="Objetivo diario de agua"
-        value={`${usuario.objetivo_agua_ml} ml`}
+        initialValue={usuario.objetivo_agua_ml}
+        suffix="ml"
+        guardar={actualizarObjetivoAgua.bind(null, usuario.id)}
       />
     </div>
   );
