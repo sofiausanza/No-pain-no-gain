@@ -3,12 +3,14 @@ import { fechaArgentina, ahoraEnArgentina } from "@/lib/fecha-argentina";
 
 export type Estadisticas = {
   diasEntrenadosEsteMes: number;
+  duracionPromedioMin: number | null;
   promedioAguaMl: number | null;
   rutinaMasEntrenada: string | null;
 };
 
 type FilaEntrenamiento = {
   iniciado_en: string;
+  finalizado_en: string;
   rutina_nombre: string;
 };
 
@@ -20,12 +22,26 @@ type FilaHidratacion = {
 export async function getEstadisticas(userId: string): Promise<Estadisticas> {
   const { data: entrenamientos } = await supabase
     .from("entrenamientos")
-    .select("iniciado_en, rutina_nombre")
+    .select("iniciado_en, finalizado_en, rutina_nombre")
     .eq("user_id", userId)
     .not("finalizado_en", "is", null)
     .returns<FilaEntrenamiento[]>();
 
   const filas = entrenamientos ?? [];
+
+  const duracionPromedioMin =
+    filas.length > 0
+      ? Math.round(
+          filas.reduce(
+            (total, f) =>
+              total +
+              (new Date(f.finalizado_en).getTime() -
+                new Date(f.iniciado_en).getTime()) /
+                60000,
+            0
+          ) / filas.length
+        )
+      : null;
 
   const ahoraArg = ahoraEnArgentina();
   const mesActual = `${ahoraArg.getFullYear()}-${String(
@@ -75,5 +91,10 @@ export async function getEstadisticas(userId: string): Promise<Estadisticas> {
       ? Math.round(totales.reduce((a, b) => a + b, 0) / totales.length)
       : null;
 
-  return { diasEntrenadosEsteMes, promedioAguaMl, rutinaMasEntrenada };
+  return {
+    diasEntrenadosEsteMes,
+    duracionPromedioMin,
+    promedioAguaMl,
+    rutinaMasEntrenada,
+  };
 }

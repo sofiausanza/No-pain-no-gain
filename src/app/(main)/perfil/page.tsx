@@ -47,6 +47,14 @@ export default async function PerfilPage() {
       <div className="mb-6 grid grid-cols-2 gap-2.5">
         <Stat label="Días entrenados este mes" value={String(stats.diasEntrenadosEsteMes)} />
         <Stat
+          label="Duración promedio"
+          value={
+            stats.duracionPromedioMin !== null
+              ? `${stats.duracionPromedioMin} min`
+              : "—"
+          }
+        />
+        <Stat
           label="Promedio de agua"
           value={stats.promedioAguaMl !== null ? `${stats.promedioAguaMl} ml` : "—"}
         />

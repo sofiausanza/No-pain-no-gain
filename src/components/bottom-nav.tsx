@@ -57,9 +57,11 @@ export function BottomNav({ avatarLetter }: { avatarLetter: string }) {
 
       <Link href="/perfil" className="flex w-[68px] flex-col items-center gap-1">
         <span
-          className={`-mt-6 flex h-14 w-14 items-center justify-center rounded-full border-2 border-accent text-base font-extrabold shadow-lg shadow-black/50 ${
-            perfilActivo ? "bg-accent text-white" : "bg-base text-accent"
-          }`}
+          className="-mt-6 flex h-14 w-14 items-center justify-center rounded-full border-2 border-accent text-base font-extrabold shadow-lg shadow-black/50"
+          style={{
+            backgroundColor: perfilActivo ? "#f5017e" : "#121212",
+            color: perfilActivo ? "#ffffff" : "#f5017e",
+          }}
         >
           {avatarLetter}
         </span>

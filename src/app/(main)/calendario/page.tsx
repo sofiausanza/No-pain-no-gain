@@ -80,13 +80,11 @@ export default async function CalendarioPage({
         </Link>
       </div>
 
-      <div className="mb-4 flex items-center gap-3 rounded-2xl border border-hairline bg-surface px-4 py-3">
-        <span className="flex h-9 min-w-9 items-center justify-center rounded-lg bg-accent px-2 font-display text-base font-extrabold tabular-nums text-white">
+      <div className="mb-4 rounded-2xl border border-hairline bg-surface px-4 py-3 text-sm text-ink">
+        <span className="font-display text-base font-extrabold tabular-nums text-white">
           {contador}
-        </span>
-        <p className="text-sm text-ink">
-          {contador === 1 ? "día entrenado" : "días entrenados"} este mes
-        </p>
+        </span>{" "}
+        {contador === 1 ? "día entrenado" : "días entrenados"} este mes
       </div>
 
       <div className="grid grid-cols-7 gap-1.5 text-center">
