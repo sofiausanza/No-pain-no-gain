@@ -44,7 +44,7 @@ export default async function EntrenamientoPage() {
 
   return (
     <div>
-      <TopBar title="Entrenamiento" avatarLetter={usuario.nombre[0]} />
+      <TopBar title="Entrenamiento" />
 
       {activo ? (
         <div className="mb-6 rounded-2xl border border-accent/40 bg-accent/10 p-5">

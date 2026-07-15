@@ -1,15 +1,12 @@
 import { TopBar } from "@/components/top-bar";
-import { getUsuario } from "@/lib/usuario";
 
 export const metadata = { title: "Hidratación" };
 export const dynamic = "force-dynamic";
 
-export default async function HidratacionPage() {
-  const usuario = await getUsuario();
-
+export default function HidratacionPage() {
   return (
     <div>
-      <TopBar title="Hidratación" avatarLetter={usuario.nombre[0]} />
+      <TopBar title="Hidratación" />
       <div className="rounded-2xl border border-hairline bg-surface p-6 text-center">
         <p className="text-sm text-ink-soft">
           Acá va a estar el registro de agua del día. Todavía en construcción.

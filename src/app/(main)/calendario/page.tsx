@@ -3,16 +3,12 @@ import { TopBar } from "@/components/top-bar";
 import { getUsuario } from "@/lib/usuario";
 import { supabase } from "@/lib/supabase";
 import { nombreMes, diasDelMes, primerDiaSemana } from "@/lib/calendario";
+import { fechaArgentina, ahoraEnArgentina } from "@/lib/fecha-argentina";
 
 export const metadata = { title: "Calendario" };
 export const dynamic = "force-dynamic";
 
 const DIAS_SEMANA = ["L", "M", "M", "J", "V", "S", "D"];
-const ZONA = "America/Argentina/Buenos_Aires";
-
-function fechaLocal(iso: string) {
-  return new Date(iso).toLocaleDateString("en-CA", { timeZone: ZONA });
-}
 
 function paramMes(d: Date) {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
@@ -26,7 +22,7 @@ export default async function CalendarioPage({
   const usuario = await getUsuario();
   const { mes } = await searchParams;
 
-  const hoyArg = new Date(new Date().toLocaleString("en-US", { timeZone: ZONA }));
+  const hoyArg = ahoraEnArgentina();
   let year = hoyArg.getFullYear();
   let month = hoyArg.getMonth();
 
@@ -43,12 +39,12 @@ export default async function CalendarioPage({
     .not("finalizado_en", "is", null);
 
   const diasEntrenados = new Set(
-    (entrenamientos ?? []).map((e) => fechaLocal(e.iniciado_en))
+    (entrenamientos ?? []).map((e) => fechaArgentina(e.iniciado_en))
   );
 
   const totalDias = diasDelMes(year, month);
   const primerDia = primerDiaSemana(year, month);
-  const hoyStr = fechaLocal(new Date().toISOString());
+  const hoyStr = fechaArgentina(new Date().toISOString());
 
   const celdas: (number | null)[] = [
     ...Array(primerDia).fill(null),
@@ -64,7 +60,7 @@ export default async function CalendarioPage({
 
   return (
     <div>
-      <TopBar title="Calendario" avatarLetter={usuario.nombre[0]} />
+      <TopBar title="Calendario" />
 
       <div className="mb-4 flex items-center justify-between">
         <Link

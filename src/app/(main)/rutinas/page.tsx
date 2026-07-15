@@ -24,7 +24,7 @@ export default async function RutinasPage() {
 
   return (
     <div>
-      <TopBar title="Rutinas" avatarLetter={usuario.nombre[0]} />
+      <TopBar title="Rutinas" />
 
       <form action={crearRutina} className="mb-5 flex gap-2">
         <input
