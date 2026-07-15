@@ -1,4 +1,5 @@
 import { TopBar } from "@/components/top-bar";
+import { NotificacionesAgua } from "@/components/notificaciones-agua";
 import { getUsuario } from "@/lib/usuario";
 import { supabase } from "@/lib/supabase";
 import { fechaArgentina } from "@/lib/fecha-argentina";
@@ -91,6 +92,8 @@ export default async function HidratacionPage() {
           </button>
         </form>
       </div>
+
+      <NotificacionesAgua userId={usuario.id} />
 
       <p className="mb-2.5 text-xs font-bold uppercase tracking-wider text-ink-faint">
         Historial

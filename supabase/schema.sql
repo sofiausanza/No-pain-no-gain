@@ -86,6 +86,21 @@ create table registros_hidratacion (
 );
 
 -- ============================================================
+-- push_subscriptions: un dispositivo suscripto a notificaciones
+-- push (ej: recordatorio de agua). Un usuario puede tener varias
+-- (celular + otra PWA instalada), por eso el endpoint es único
+-- por fila en vez de estar en la tabla de usuarios.
+-- ============================================================
+create table push_subscriptions (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references usuarios(id) on delete cascade,
+  endpoint text not null unique,
+  p256dh text not null,
+  auth text not null,
+  created_at timestamptz not null default now()
+);
+
+-- ============================================================
 -- índices para las consultas más frecuentes
 -- ============================================================
 create index idx_rutinas_user on rutinas(user_id);
@@ -94,6 +109,7 @@ create index idx_entrenamientos_user on entrenamientos(user_id, iniciado_en desc
 create index idx_series_entrenamiento on series_entrenamiento(entrenamiento_id);
 create index idx_series_ejercicio on series_entrenamiento(ejercicio_id, created_at desc);
 create index idx_hidratacion_user_fecha on registros_hidratacion(user_id, fecha);
+create index idx_push_subscriptions_user on push_subscriptions(user_id);
 
 -- ============================================================
 -- Row Level Security: habilitada en todas las tablas.
@@ -108,6 +124,7 @@ alter table ejercicios enable row level security;
 alter table entrenamientos enable row level security;
 alter table series_entrenamiento enable row level security;
 alter table registros_hidratacion enable row level security;
+alter table push_subscriptions enable row level security;
 
 create policy "permitir todo (sin auth todavia)" on usuarios for all using (true) with check (true);
 create policy "permitir todo (sin auth todavia)" on rutinas for all using (true) with check (true);
@@ -115,6 +132,7 @@ create policy "permitir todo (sin auth todavia)" on ejercicios for all using (tr
 create policy "permitir todo (sin auth todavia)" on entrenamientos for all using (true) with check (true);
 create policy "permitir todo (sin auth todavia)" on series_entrenamiento for all using (true) with check (true);
 create policy "permitir todo (sin auth todavia)" on registros_hidratacion for all using (true) with check (true);
+create policy "permitir todo (sin auth todavia)" on push_subscriptions for all using (true) with check (true);
 
 -- ============================================================
 -- Semilla: tu usuario. La app va a leer siempre "el primer usuario"
