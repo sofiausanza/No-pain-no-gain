@@ -45,15 +45,10 @@ export default async function PerfilPage() {
         Tus números
       </p>
       <div className="mb-6 grid grid-cols-2 gap-2.5">
-        <Stat label="Entrenamientos completados" value={String(stats.totalEntrenamientos)} />
         <Stat label="Días entrenados este mes" value={String(stats.diasEntrenadosEsteMes)} />
         <Stat
-          label="Duración promedio"
-          value={
-            stats.duracionPromedioMin !== null
-              ? `${stats.duracionPromedioMin} min`
-              : "—"
-          }
+          label="Promedio de agua"
+          value={stats.promedioAguaMl !== null ? `${stats.promedioAguaMl} ml` : "—"}
         />
         <Stat label="Rutina más entrenada" value={stats.rutinaMasEntrenada ?? "—"} />
       </div>
